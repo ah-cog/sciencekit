@@ -1,0 +1,6 @@
+[submodule "sciencekit-server"]
+	path = sciencekit-server
+	url = https://github.com/mgub/sciencekit-server
+[submodule "sciencekit-ios"]
+	path = sciencekit-ios
+	url = https://github.com/mgub/sciencekit-ios
