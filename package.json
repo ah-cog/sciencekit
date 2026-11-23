@@ -7,7 +7,7 @@
   },
   "scripts": {
     "setup": "node scripts/setup.mjs",
-    "start": "node scripts/compose.mjs up -d --build --wait --wait-timeout 300",
+    "start": "node scripts/compose.mjs up -d --wait --wait-timeout 300",
     "db": "node scripts/compose.mjs up -d --wait mongo",
     "stop:db": "node scripts/compose.mjs stop mongo",
     "test": "node scripts/compose.mjs --profile test run --build --rm test",
@@ -18,6 +18,8 @@
     "stop": "node scripts/compose.mjs stop",
     "logs": "node scripts/compose.mjs logs -f",
     "test:host": "npm test --prefix sciencekit-server",
-    "test:browser": "node scripts/browser-test.mjs"
+    "test:browser": "node scripts/browser-test.mjs",
+    "build": "node scripts/compose.mjs build",
+    "rebuild": "node scripts/compose.mjs up -d --build --wait --wait-timeout 300"
   }
 }

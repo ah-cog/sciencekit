@@ -18,7 +18,8 @@ The requested sibling layout also works: `repos/sciencekit`, `repos/sciencekit-s
 ```sh
 npm run logs         # Stream all service logs
 npm stop             # Stop services; retain data
-npm start            # Rebuild changed code and start healthy services
+npm start            # Start services; build images if missing
+npm run rebuild      # Rebuild after changing source code
 ```
 
 Set `DOCKER_CONTEXT` in `.env` to use a specific local engine (for example, `orbstack`) without changing the global Docker context.
