@@ -1,0 +1,23 @@
+{
+  "name": "sciencekit-system",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "start": "node scripts/compose.mjs up -d --build --wait --wait-timeout 300",
+    "db": "node scripts/compose.mjs up -d --wait mongo",
+    "stop:db": "node scripts/compose.mjs stop mongo",
+    "test": "node scripts/compose.mjs --profile test run --build --rm test",
+    "ios": "npm run ios --prefix sciencekit-ios",
+    "android": "npm run android --prefix sciencekit-ios",
+    "configure": "node scripts/configure.mjs",
+    "dev": "node scripts/dev.mjs",
+    "stop": "node scripts/compose.mjs stop",
+    "logs": "node scripts/compose.mjs logs -f",
+    "test:host": "npm test --prefix sciencekit-server",
+    "test:browser": "node scripts/browser-test.mjs"
+  }
+}

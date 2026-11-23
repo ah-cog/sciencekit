@@ -1,0 +1,58 @@
+name: sciencekit
+services:
+  mongo:
+    image: mongo:9.0.8
+    restart: unless-stopped
+    volumes:
+      - database:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 20s
+      retries: 30
+  server:
+    build:
+      context: ${SERVER_DIR:-./sciencekit-server}
+    init: true
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      MONGODB_URI: mongodb://mongo:27017/sciencekit
+      HOST: 0.0.0.0
+      PORT: 3000
+      CLIENT_URL: http://localhost:${WEB_PORT:-8080}
+      SESSION_SECRET: ${SESSION_SECRET:?Run npm run configure to create local configuration}
+    ports:
+      - "127.0.0.1:${API_PORT:-3000}:3000"
+    volumes:
+      - uploads:/app/public/uploads
+      - thumbnails:/app/public/thumbnails
+    depends_on:
+      mongo:
+        condition: service_healthy
+  client:
+    build:
+      context: ${CLIENT_DIR:-./sciencekit-ios}
+    environment:
+      SCIENCEKIT_API_URL: http://localhost:${API_PORT:-3000}
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${WEB_PORT:-8080}:80"
+    depends_on:
+      server:
+        condition: service_healthy
+  test:
+    profiles: ["test"]
+    build:
+      context: ${SERVER_DIR:-./sciencekit-server}
+      target: test
+    init: true
+    environment:
+      TEST_MONGODB_URI: mongodb://mongo:27017/sciencekit_test
+    depends_on:
+      mongo:
+        condition: service_healthy
+volumes:
+  database:
+  uploads:
+  thumbnails:

@@ -1,0 +1,10 @@
+import {existsSync} from 'node:fs';
+import {spawn} from 'node:child_process';
+import path from 'node:path';
+import {root} from './paths.mjs';
+const envFile=path.join(root,'.env');
+if(existsSync(envFile)) process.loadEnvFile(envFile);
+const child=spawn('docker',['compose',...process.argv.slice(2)],{cwd:root,env:process.env,stdio:'inherit'});
+child.on('error',error=>{console.error(error.message);process.exitCode=1;});
+child.on('exit',code=>{process.exitCode=code || 0;});
+for(const signal of ['SIGINT','SIGTERM']) process.on(signal,()=>child.kill(signal));

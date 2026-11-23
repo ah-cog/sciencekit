@@ -1,6 +1,8 @@
 [submodule "sciencekit-server"]
 	path = sciencekit-server
-	url = https://github.com/mgub/sciencekit-server
+	url = https://github.com/ah-cog/sciencekit-server.git
+	branch = codex/modernize-local-system
 [submodule "sciencekit-ios"]
 	path = sciencekit-ios
-	url = https://github.com/mgub/sciencekit-ios
+	url = https://github.com/ah-cog/sciencekit-ios.git
+	branch = codex/modernize-local-system
